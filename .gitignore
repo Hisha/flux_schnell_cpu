@@ -1,0 +1,12 @@
+# Ignore virtual environment
+flux_env/
+
+# Ignore local model files
+flux_schnell_local/
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore system files
+.DS_Store
