@@ -51,43 +51,19 @@ def main():
     start = time.time()
 
     if args.init_image:
-        # ✅ IMG2IMG MODE → SD 1.5
-        print("🖼️ Using SD1.5 Img2Img mode")
-        from diffusers import StableDiffusionImg2ImgPipeline
+        print("🖼️ Using SD 1.5 img2img mode")
         pipe = StableDiffusionImg2ImgPipeline.from_pretrained(
-            args.sd_model_path,
-            torch_dtype=torch.float32
+            "/home/smithkt/SD1.5",    # <-- full local path
+            torch_dtype=torch.float32,
+            local_files_only=True
         )
-        pipe.to("cpu")
-        pipe.safety_checker = None
-        pipe.enable_attention_slicing()
-
-        init_image = Image.open(args.init_image).convert("RGB").resize((args.width, args.height))
-        image = pipe(
-            prompt=args.prompt,
-            image=init_image,
-            strength=args.strength,
-            guidance_scale=7.5,  # SD default
-            num_inference_steps=20  # SD default steps
-        ).images[0]
-
     else:
-        # ✅ TXT2IMG MODE → Flux Schnell
-        print("🎨 Using Flux Schnell Txt2Img mode")
+        print("🎨 Using Flux Schnell txt2img mode")
         pipe = DiffusionPipeline.from_pretrained(
-            args.flux_model_path,
-            torch_dtype=torch.float32
+            args.model_path,
+            torch_dtype=torch.float32,
+            local_files_only=True
         )
-        pipe.to("cpu")
-        pipe.enable_attention_slicing()
-
-        image = pipe(
-            args.prompt,
-            num_inference_steps=args.steps,
-            guidance_scale=args.guidance_scale,
-            height=args.height,
-            width=args.width
-        ).images[0]
 
     image.save(output_path)
     end = time.time()
