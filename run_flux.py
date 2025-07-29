@@ -76,8 +76,8 @@ def main():
                 prompt=args.prompt,
                 image=init_image,
                 strength=args.strength,
-                guidance_scale=7.5,        # SD default
-                num_inference_steps=20     # SD standard steps
+                guidance_scale=6.5,        # SD default
+                num_inference_steps=40     # SD standard steps
             ).images[0]
 
         else:
